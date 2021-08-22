@@ -35,7 +35,7 @@ pipeline{
                 script {
 
                 def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
-
+                 }
                 nexusArtifactUploader (
                     credentialsId: '35e9b26e-269a-4804-a70d-6b2ec7a608ce', 
                     groupId: "${GroupId}", 
@@ -56,7 +56,7 @@ pipeline{
 
                 )
               
-             }
+            
             }
         }
           // Stage 4 : Print some information
