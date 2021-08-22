@@ -23,16 +23,48 @@ pipeline{
             }
         }
 
-        // Stage3 : Publish the source code to Sonarqube
-        stage ('Sonarqube Analysis'){
+         // Stage3 : Publish the artifacts to Nexus
+        stage ('Publish to Nexus'){
             steps {
-                echo ' Source code published to Sonarqube for SCA......'
-                withSonarQubeEnv('sonarqube'){ // You can override the credential to be used
-                     sh 'mvn sonar:sonar'
-                }
+                script {
 
+                def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
+
+                nexusArtifactUploader artifacts: 
+                [[artifactId: "${ArtifactId}", 
+                classifier: '', 
+                file: "target/${ArtifactId}-${Version}.war", 
+                type: 'war']], 
+                credentialsId: '35e9b26e-269a-4804-a70d-6b2ec7a608ce', 
+                groupId: "${GroupId}", 
+                nexusUrl: '172.20.10.140:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: "${NexusRepo}", 
+                version: "${Version}"
+             }
             }
         }
+          // Stage 4 : Print some information
+        stage ('Print Environment variables'){
+                    steps {
+                        echo "Artifact ID is '${ArtifactId}'"
+                        echo "Version is '${Version}'"
+                        echo "GroupID is '${GroupId}'"
+                        echo "Name is '${Name}'"
+                    }
+                }
+
+        // Stage3 : Publish the source code to Sonarqube
+        //stage ('Sonarqube Analysis'){
+        //    steps {
+         //       echo ' Source code published to Sonarqube for SCA......'
+        //        withSonarQubeEnv('sonarqube'){ // You can override the credential to be used
+         //            sh 'mvn sonar:sonar'
+         //       }
+//
+    //        }
+     //   }
 
         
         
