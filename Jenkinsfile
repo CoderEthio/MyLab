@@ -43,9 +43,8 @@ pipeline{
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: "${NexusRepo}", 
-                    version: "${Version}"
-
-                    artifacts [
+                    version: "${Version}",
+                    artifacts: [
                        [artifactId: "${ArtifactId}", 
                         classifier: '', 
                         file: "target/${ArtifactId}-${Version}.war", 
