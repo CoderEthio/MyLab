@@ -44,7 +44,7 @@ pipeline{
                             type: 'war'
                             ]
                         ], 
-                    credentialsId: '35e9b26e-269a-4804-a70d-6b2ec7a608ce', 
+                    credentialsId: '36368a4d-c71b-4f91-aa22-a7318b8cfc02', 
                     groupId: "${GroupId}", 
                     nexusUrl: '3.144.130.181:8081', 
                     nexusVersion: 'nexus3', 
